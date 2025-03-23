@@ -74,8 +74,11 @@
 
     /* Unter 500px: 1 Bild pro Reihe */
     @media (max-width: 500px) {
+        .image-container {
+            justify-content: center;
+        }
         .image-container img {
-            width: 100%; /* Volle Breite für kleine Bildschirme */
+            width: 45%; /* Zwei Bilder nebeneinander */
         }
     }
 .success-message {
