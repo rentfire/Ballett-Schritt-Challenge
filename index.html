@@ -76,8 +76,11 @@
 
     /* Unter 500px: 1 Bild pro Reihe */
     @media (max-width: 500px) {
+        .image-container {
+            justify-content: center;
+        }
         .image-container img {
-            width: 100%; /* Volle Breite für kleine Bildschirme */
+            width: 45%; /* Zwei Bilder nebeneinander */
         }
     }
 .success-message {
@@ -116,8 +119,9 @@
         <div class="steps-container" id="sortable">
             <!-- Schritte werden per JavaScript eingefügt -->
         </div><br><br>
-        <button id="checkOrder" class="cta">Überprüfen</button>
-
+       <div style="text-align:center"> 
+ <button id="checkOrder" class="cta">Überprüfen</button>
+       </div>
 
         <p id="message"></p>
         <div id="score">Punkte: <span id="points">0</span></div>
