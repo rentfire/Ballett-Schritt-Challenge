@@ -40,20 +40,22 @@
     </style>
 
 <style>
-    .image-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px; /* Abstand zwischen den Bildern */
-        max-width: 1000px; /* Begrenzung für größere Bildschirme */
-        margin: 0 auto; /* Zentriert die Bilder auf der Seite */
-        background: linear-gradient(90deg, #ff7eb3, #ffdb00, #7effa2);
-    }
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px; /* Abstand zwischen den Bildern */
+    max-width: 1000px; /* Begrenzung für größere Bildschirme */
+    margin: 0 auto; /* Zentriert die Bilder auf der Seite */
+    padding: 20px 0; /* Abstand oberhalb und unterhalb */
+    background: linear-gradient(to bottom, #ff7eb3, #ffdb00, #7effa2);
+}
 
-    .image-container img {
-        width: 200px;
-        height: auto;
-    }
+.image-container img {
+    border: 2px solid #E1E1E1;
+    padding: 5px; /* Optional: Etwas Innenabstand für besseren Look */
+    background: white; /* Falls du einen Kontrast zum Gradient möchtest */
+}
 
     /* Ab 800px Bildschirmbreite: 4 Bilder nebeneinander */
     @media (min-width: 800px) {
