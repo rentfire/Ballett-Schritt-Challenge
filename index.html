@@ -6,6 +6,8 @@
     <title>Ballett-Schritt-Challenge</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
+   <style>.cta-button,.rounded-button,.cta{display:inline-block;text-decoration:none;font-size:16px;margin:5px;cursor:pointer;text-align:center;padding:10px 20px;border-radius:50px}.cta-button{background-color:#fff0;border:2px solid #5d7293;color:#5d7293}.cta-button:hover{background-color:#8b7355;color:#fff}.rounded-button{background-color:#8b7355;color:#fff}.rounded-button:hover{background-color:#5d7293}.cta{background-color:#5d7293;color:#fff}.cta:hover{background-color:#8b7355}@media (max-width:600px){.cta-button,.rounded-button,.cta{width:auto;display:block}}</style> 
+ 
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,11 +76,8 @@
 
     /* Unter 500px: 1 Bild pro Reihe */
     @media (max-width: 500px) {
-        .image-container {
-            justify-content: center;
-        }
         .image-container img {
-            width: 45%; /* Zwei Bilder nebeneinander */
+            width: 100%; /* Volle Breite für kleine Bildschirme */
         }
     }
 .success-message {
@@ -117,13 +116,19 @@
         <div class="steps-container" id="sortable">
             <!-- Schritte werden per JavaScript eingefügt -->
         </div><br><br>
-        <button id="checkOrder">Überprüfen</button>
+        <button id="checkOrder" class="cta">Überprüfen</button>
+
+
         <p id="message"></p>
         <div id="score">Punkte: <span id="points">0</span></div>
 <br><br><h2>Interessierst Du Dich für Ballett-Spiele oder Ballettthemen?</h2> <p>
 Schau Dir doch einmal meinen <a href="https://www.ballettstudio-ost.de/ballett-blog.php"><b>Ballett Blog</b></a> an. 
 Dort findest Du eine große Auswahl an interessanten Themen rund um das Ballett.<br>
-</p><p>&copy; 2025 Ballettstudio Ost</p>
+</p>
+<a class="cta" href="https://www.ballettstudio-ost.de/ballett-blog.php" title="Probestunde sichern beim Ballettstudio Ost">
+  		<b>Ballett Blog</b></a>
+
+<p>&copy; 2025 Ballettstudio Ost</p>
 
     </div>
 <script>
