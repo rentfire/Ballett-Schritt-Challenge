@@ -40,26 +40,25 @@
     </style>
 
 <style>
-.image-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px; 
-    max-width: 1024px; 
-    margin: 0 auto; 
-    padding: 20px 0; 
-    background: linear-gradient(to bottom, #ff7eb3, #ffdb00, #7effa2);
-}
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px; 
+        max-width: 1024px; 
+        margin: 0 auto; 
+        background: linear-gradient(90deg, #ff7eb3, #ffdb00, #7effa2);
+    }
 
-.image-container img {
-    border: 2px solid #E1E1E1;
-    padding: 2px; 
-}
+    .image-container img {
+        width: 200px;
+        height: auto;
+    }
 
     /* Ab 800px Bildschirmbreite: 4 Bilder nebeneinander */
     @media (min-width: 800px) {
         .image-container {
-            flex-wrap: nowrap; /* Keine Umbrüche */
+            flex-wrap: nowrap; 
             justify-content: space-between;
         }
     }
