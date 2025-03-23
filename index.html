@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ballett-Schritt-Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f3f3f3;
+        }
+        .game-container {
+            width: 90%;
+            max-width: 1024px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            min-height: 200px;
+        }
+        .step {
+            background: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: grab;
+            user-select: none;
+        }
+    </style>
+
+<style>
+    .image-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px; /* Abstand zwischen den Bildern */
+        max-width: 1000px; /* Begrenzung für größere Bildschirme */
+        margin: 0 auto; /* Zentriert die Bilder auf der Seite */
+    }
+
+    .image-container img {
+        width: 250px;
+        height: auto;
+    }
+
+    /* Ab 800px Bildschirmbreite: 4 Bilder nebeneinander */
+    @media (min-width: 800px) {
+        .image-container {
+            flex-wrap: nowrap; /* Keine Umbrüche */
+            justify-content: space-between;
+        }
+    }
+
+    /* Unter 800px: 2 Bilder pro Reihe */
+    @media (max-width: 799px) {
+        .image-container {
+            justify-content: center;
+        }
+        .image-container img {
+            width: 45%; /* Zwei Bilder nebeneinander */
+        }
+    }
+
+    /* Unter 500px: 1 Bild pro Reihe */
+    @media (max-width: 500px) {
+        .image-container img {
+            width: 100%; /* Volle Breite für kleine Bildschirme */
+        }
+    }
+.success-message {
+    display: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(90deg, #ff7eb3, #ffdb00, #7effa2);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+</style>
+
+</head>
+<body>
+    <div class="game-container">
+        <h1>Ballett-Schritt-Challenge</h1>
+
+<div class="image-container">
+    <img src="plies.jpg" alt="Plie">
+    <img src="tendu.jpg" alt="Tendu">
+    <img src="grand-battement.jpg" alt="Grand Battement">
+    <img src="pirouette.jpg" alt="Pirouette">
+</div><br><br>
+
+        <p>Ziehe die Kästchen mit den Ballettschritten in die richtige Reihenfolge!</p>
+        <div id="timer">Zeit: <span id="time">30</span> Sek</div>
+        <div class="steps-container" id="sortable">
+            <!-- Schritte werden per JavaScript eingefügt -->
+        </div><br><br>
+        <button id="checkOrder">Überprüfen</button>
+        <p id="message"></p>
+        <div id="score">Punkte: <span id="points">0</span></div>
+<br><br><p>Interessierst Du Dich für Ballett-Spiele oder Ballettthemen? <br>Schau Dir doch einmal meinen <a href="https://www.ballettstudio-ost.de/ballett-blog.php">Ballett Blog</a> an. Dort findest Du eine große Auswahl an interessanten Themen rund um das Ballett.<br>
+</p><p>&copy; 2025 <a href="https://www.ballettstudio-ost.de/ballett-blog.php">Ballettstudio Ost</a></p>
+
+    </div>
+<script>
+    const steps = [
+        { name: "Plié", order: 1 },
+        { name: "Tendu", order: 2 },
+        { name: "Grand Battement", order: 3 },
+        { name: "Pirouette", order: 4 }
+    ];
+
+    let shuffledSteps = [...steps].sort(() => Math.random() - 0.5);
+    const sortableContainer = document.getElementById("sortable");
+    let timeLeft = 60;
+    let score = 0;
+    let timerInterval;
+    
+    function renderSteps() {
+        sortableContainer.innerHTML = "";
+        shuffledSteps.forEach((step) => {
+            const div = document.createElement("div");
+            div.classList.add("step");
+            div.textContent = step.name;
+            div.draggable = true;
+            div.dataset.order = step.order;
+            div.addEventListener("dragstart", dragStart);
+            div.addEventListener("dragover", dragOver);
+            div.addEventListener("drop", drop);
+            sortableContainer.appendChild(div);
+        });
+    }
+    
+    function dragStart(event) {
+        event.dataTransfer.setData("text", event.target.dataset.order);
+        event.target.classList.add("dragging");
+    }
+
+    function dragOver(event) {
+        event.preventDefault();
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        const draggedOrder = event.dataTransfer.getData("text");
+        const targetOrder = event.target.dataset.order;
+        
+        const draggedIndex = shuffledSteps.findIndex(s => s.order == draggedOrder);
+        const targetIndex = shuffledSteps.findIndex(s => s.order == targetOrder);
+        
+        [shuffledSteps[draggedIndex], shuffledSteps[targetIndex]] = [shuffledSteps[targetIndex], shuffledSteps[draggedIndex]];
+        renderSteps();
+    }
+    
+    function checkOrder() {
+        const isCorrect = shuffledSteps.every((step, index) => step.order === index + 1);
+        const message = document.getElementById("message");
+
+        if (isCorrect) {
+            message.innerHTML = "🎉 Richtig! Super gemacht! 🎉";
+            message.classList.add("success-message");
+            message.style.display = "block";
+            score += 10;
+            document.getElementById("points").textContent = score;
+            clearInterval(timerInterval); // Stoppt den Timer
+        } else {
+            message.innerHTML = "❌ Falsch! Versuche es erneut.";
+            message.classList.remove("success-message");
+            message.style.display = "block";
+        }
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                document.getElementById("time").textContent = timeLeft;
+            } else {
+                clearInterval(timerInterval);
+                document.getElementById("message").textContent = "Zeit abgelaufen!";
+            }
+        }, 1000);
+    }
+    
+    document.getElementById("checkOrder").addEventListener("click", checkOrder);
+    renderSteps();
+    startTimer();
+</script>
+
+
+</body>
+</html>
